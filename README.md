@@ -1,0 +1,36 @@
+# System Health Monitor
+
+## Problem Statement
+
+System resources such as disk space, memory, and CPU load can become overloaded without users noticing. This can affect system performance and cause unexpected failures.
+
+## Project Goals
+
+Build a Bash-based system monitoring tool that checks important system resources, detects potential issues, records monitoring results, and automates health checks.
+
+## Tech Stack
+
+- Bash
+- Linux
+- ShellCheck
+- AWK
+- Cron
+
+## Features
+
+- Monitors root filesystem disk usage.
+- Checks system memory consumption.
+- Measures system load against available CPU cores.
+- Configurable warning thresholds through environment variables.
+- Displays `OK` or `WARN` for each resource.
+- Logs monitoring results to `~/logs/health.log`.
+- Supports quiet mode with `--quiet`.
+- Returns appropriate exit codes.
+- Runs automatically every 15 minutes using cron.
+- Can be executed globally using the `health` command.
+
+## Author
+
+**Tata Stanley Mbajing**
+Frontend Developer
+Email: [stanleymbajingtata@gmail.com]
