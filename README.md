@@ -29,6 +29,14 @@ Build a Bash-based system monitoring tool that checks important system resources
 - Runs automatically every 15 minutes using cron.
 - Can be executed globally using the `health` command.
 
+### Screenshots
+
+![alt text](<screenshots/Screenshot From 2026-11-03 18-03-23.png>)
+
+![alt text](<screenshots/Screenshot From 2026-11-03 18-04-28.png>)
+
+![alt text](<screenshots/Screenshot From 2026-11-03 18-05-16.png>)
+
 ### Global Installation
 
 Create the local binary directory:
