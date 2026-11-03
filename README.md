@@ -29,6 +29,67 @@ Build a Bash-based system monitoring tool that checks important system resources
 - Runs automatically every 15 minutes using cron.
 - Can be executed globally using the `health` command.
 
+### Screenshots
+
+![alt text](<screenshots/Screenshot From 2026-11-03 18-03-23.png>)
+
+![alt text](<screenshots/Screenshot From 2026-11-03 18-04-28.png>)
+
+![alt text](<screenshots/Screenshot From 2026-11-03 18-05-16.png>)
+
+### Global Installation
+
+Create the local binary directory:
+
+```bash
+mkdir -p ~/.local/bin
+```
+
+Create a symbolic link to the health monitor:
+
+```bash
+ln -sfn "$PWD/health.sh" ~/.local/bin/health
+```
+
+Add the directory to PATH:
+
+```bash
+grep -q 'local/bin' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+The monitor can now be executed from any directory:
+
+```bash
+health
+```
+
+### Automated Monitoring with Cron
+
+Add this entry to your crontab:
+
+```bash
+*/15 * * * * $HOME/.local/bin/health --quiet
+```
+
+This executes the health monitor every 15 minutes without displaying terminal output. Results are saved to:
+
+```text
+~/logs/health.log
+```
+
+View the monitoring history:
+
+```bash
+tail -10 ~/logs/health.log
+```
+
+View scheduled jobs:
+
+```bash
+crontab -l
+```
+
 ## Author
 
 **Tata Stanley Mbajing**
