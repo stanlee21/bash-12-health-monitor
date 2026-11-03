@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+# Set warning limits with default values
+DISK_LIMIT="${DISK_LIMIT:-85}"
+MEM_LIMIT="${MEM_LIMIT:-80}"
+
 # Get system information
 hostname=$(hostname)
 timestamp=$(date '+%Y-%m-%d %H:%M')
@@ -19,8 +23,25 @@ load_average=$(awk '{print $1}' /proc/loadavg)
 cores=$(nproc)
 
 # Display system health report
-echo "System health: $hostname ($timestamp)"
-echo
-echo "Disk: ${disk_usage}%"
-echo "Memory: ${memory_usage}%"
-echo "Load: ${load_average} on ${cores} cores"
+printf "System health: %s (%s)\n\n" "$hostname" "$timestamp"
+
+# Check disk usage
+if (( disk_usage > DISK_LIMIT )); then
+    printf "Disk     %s%%   WARN (limit %s%%)\n" "$disk_usage" "$DISK_LIMIT"
+else
+    printf "Disk     %s%%   OK\n" "$disk_usage"
+fi
+
+# Check memory usage
+if (( memory_usage > MEM_LIMIT )); then
+    printf "Memory   %s%%   WARN (limit %s%%)\n" "$memory_usage" "$MEM_LIMIT"
+else
+    printf "Memory   %s%%   OK\n" "$memory_usage"
+fi
+
+# Check system load per core
+if awk -v l="$load_average" -v n="$cores" 'BEGIN { exit !(l / n > 1.0) }'; then
+    printf "Load     %s on %s cores   WARN (limit 1.0 per core)\n" "$load_average" "$cores"
+else
+    printf "Load     %s on %s cores   OK\n" "$load_average" "$cores"
+fi
